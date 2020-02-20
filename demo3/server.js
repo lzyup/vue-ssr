@@ -28,9 +28,10 @@ server.listen(8002,()=>{
 const feServer = express();
 feServer.use(express.static('dist'));
 
-feServer.get('/index',(req,res)=>{
+
+feServer.get('/index', (req, res) => {
     //输出html
-    let html = fs.readFileSync(path.resolve(__dirname),'dist/index.html','utf-8');
+    let html = fs.readFileSync(path.resolve(__dirname, 'dist/index.html'), 'utf-8');
     res.end(html);
 })
 

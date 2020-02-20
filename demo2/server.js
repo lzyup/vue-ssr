@@ -3,7 +3,7 @@ const path = require('path');
 const express = require('express');
 const server = express();
 server.use(express.static('dist'));
-const createApp = require(path.resolve(__dirname,'dist/server.js'))
+// const createApp = require(path.resolve(__dirname,'dist/server.js'))
 
 const bundle = fs.readFileSync(path.resolve(__dirname,'dist/server.js'),'utf-8');
 const renderer = require('vue-server-renderer').createBundleRenderer(bundle,{
@@ -11,14 +11,15 @@ const renderer = require('vue-server-renderer').createBundleRenderer(bundle,{
 });
 
 server.get('/index',(req,res)=>{
-    const app = createApp();
-    renderer.renderToString(app,(err,html)=>{
+    // const app = createApp();
+    const context = {url:req.url}
+    //这里无需传入一个应用程序，因为在执行bundle时已经自动创建过了
+    renderer.renderToString(context,(err,html)=>{
         if(err){
             console.error(err);
             res.status(500).end('服务器内部错误')
             return;
-        }
-        console.log('html--->',html)    
+        } 
         res.end(html)
     })
 })
